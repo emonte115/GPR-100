@@ -2,11 +2,23 @@
 //
 
 #include <stdio.h>
-#include <iomanip>
+#include "foo.h"
+#include "Number-Guesser.h"
+
+using namespace std;
 
 int main()
 {
-	int test = foo(1);
+	/*int test = foo(1);
+	cout << test;*/
 
-	cout << test;
+	srand(time(NULL));
+
+	do {
+		startGame();
+
+		while (!checkAnswer()) {
+			cin >> guess;
+		}
+	} while (checkContinue());
 }
