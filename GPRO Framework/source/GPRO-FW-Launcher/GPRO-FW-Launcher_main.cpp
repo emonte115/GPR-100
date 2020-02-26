@@ -7,6 +7,9 @@
 
 using namespace std;
 
+int randNum;
+int guess;
+
 int main()
 {
 	/*int test = foo(1);
@@ -15,10 +18,15 @@ int main()
 	srand(time(NULL));
 
 	do {
-		startGame();
+		startGame(randNum, guess);
 
-		while (!checkAnswer()) {
+		while (!checkAnswer(randNum, guess)) {
 			cin >> guess;
 		}
+
+		cout << endl << "You Win!\n\n" << "Do you want to play again? (Y/N): ";
+
 	} while (checkContinue());
+
+	cout << endl << "Good bye!\n";
 }

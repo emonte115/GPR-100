@@ -3,9 +3,6 @@
 #include <time.h>
 #include <iostream>
 
-int randNum;
-int guess;
-
-void startGame();
-bool checkAnswer();
+void startGame(int &randNum, int &guess);
+bool checkAnswer(int &randNum, int &guess);
 bool checkContinue();
