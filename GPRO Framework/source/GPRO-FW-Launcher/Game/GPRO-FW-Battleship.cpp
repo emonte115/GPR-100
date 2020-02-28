@@ -73,7 +73,7 @@ inline gs_battleship_index gs_battleship_reset(gs_battleship game)
 
 int launchBattleship()
 {
-	gs_battleship game = { 0 };
+	gs_battleship game;// = { 0 };
 
 	gs_battleship_reset(game);
 
@@ -83,13 +83,17 @@ int launchBattleship()
 }
 
 void placeShips() {
-	int shipType;
+	gs_battleship_index player, xpos, ypos, shipType;
 
 	cout << "What ship do you want to place?\n\n";
 	cout << "1 for patrol boat\n" << "2 for submarine\n" << "3 for destroyer\n" << "4 for battleship\n" << "5 for carrier\n";
 
 	cin >> shipType;
 	shipType -= 2;
+
+	cout << "Press 1 to place it vertically, press 2 to place it  horizontally\n";
+
+	//cin >> 
 }
 
 //-----------------------------------------------------------------------------
