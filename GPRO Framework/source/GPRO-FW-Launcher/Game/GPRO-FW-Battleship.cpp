@@ -1,5 +1,8 @@
 
 #include <stdio.h>
+#include <iostream>
+
+using namespace std;
 
 
 //-----------------------------------------------------------------------------
@@ -39,14 +42,14 @@ typedef		gs_battleship_space_state		gs_battleship[GS_BATTLESHIP_PLAYERS][GS_BATT
 #define GS_BATTLESHIP_VALID(p,x,y)				GS_VALIDATE_COORDINATE(x,y,p,GS_BATTLESHIP_BOARD_WIDTH,GS_BATTLESHIP_BOARD_HEIGHT,GS_BATTLESHIP_PLAYERS)
 
 
-inline gs_battleship_space_state gs_checkers_getSpaceState(gs_battleship const game, gs_battleship_index const player, gs_battleship_index const xpos, gs_battleship_index const ypos)
+inline gs_battleship_space_state gs_battleship_getSpaceState(gs_battleship const game, gs_battleship_index const player, gs_battleship_index const xpos, gs_battleship_index const ypos)
 {
 	if (GS_BATTLESHIP_VALID(player, xpos, ypos))
 		return (game[player][xpos][ypos]);
 	return gs_battleship_space_invalid;
 }
 
-inline gs_battleship_space_state gs_checkers_setSpaceState(gs_battleship game, gs_battleship_space_state const state, gs_battleship_index const player, gs_battleship_index const xpos, gs_battleship_index const ypos)
+inline gs_battleship_space_state gs_battleship_setSpaceState(gs_battleship game, gs_battleship_space_state const state, gs_battleship_index const player, gs_battleship_index const xpos, gs_battleship_index const ypos)
 {
 	if (GS_BATTLESHIP_VALID(player, xpos, ypos))
 		return (game[player][xpos][ypos] = state);
@@ -79,5 +82,14 @@ int launchBattleship()
 	return 0;
 }
 
+void placeShips() {
+	int shipType;
+
+	cout << "What ship do you want to place?\n\n";
+	cout << "1 for patrol boat\n" << "2 for submarine\n" << "3 for destroyer\n" << "4 for battleship\n" << "5 for carrier\n";
+
+	cin >> shipType;
+	shipType -= 2;
+}
 
 //-----------------------------------------------------------------------------
