@@ -75,11 +75,22 @@ inline gs_battleship_index gs_battleship_reset(gs_battleship game)
 bool error;
 string border;
 
+void drawBoard(gs_battleship game, gs_battleship_index player);
+void setUpBoard(gs_battleship game);
+void placeShip(gs_battleship game, gs_battleship_index player, int shipType, int direction, int x, int y);
+string getShipName();
+int getShipUnits(gs_battleship_space_state ship);
+char displaySpaceState(gs_battleship_space_state state);
+
 int launchBattleship()
 {
 	gs_battleship game;// = { 0 };
 
-	border.assign(GS_BATTLESHIP_BOARD_WIDTH * 2, '-');
+	border.assign((GS_BATTLESHIP_BOARD_WIDTH * 2) + 1, '-');
+	drawBoard(game, 0);
+	gs_battleship_setSpaceState(game, gs_battleship_space_miss, 0, 2, 2);
+	drawBoard(game, 0);
+	drawBoard(game, 1);
 	//setUpBoard(game);
 
 	gs_battleship_reset(game);
@@ -92,15 +103,21 @@ int launchBattleship()
 /*------------------------------SET UP FUNCTIONS------------------------------*/
 void drawBoard(gs_battleship game, gs_battleship_index player)
 {
-	cout << "BATTLESHIP\n" 
-		<< "Player " << player << " turn\n\n"
-		<< border << endl
-
+	cout << "BATTLESHIP\n"
+		<< "Player " << player + 1 << " turn\n\n"
+		<< border << endl;
+	for (int y = 0; y < GS_BATTLESHIP_BOARD_HEIGHT; y++) {
+		for (int x = 0; x < GS_BATTLESHIP_BOARD_WIDTH; x++) {
+			cout << "|" << displaySpaceState(game[player][x][y]);
+		}
+		cout << "|" << endl;
+	}
+	cout << border << endl << endl;
 }
 
 void setUpBoard(gs_battleship game) 
 {
-	gs_battleship_index player, xpos, ypos;
+	gs_battleship_index player, xpos = 0, ypos = 0;
 	int shipType;
 
 	for (player = 0; player < GS_BATTLESHIP_PLAYERS; ++player) {
@@ -125,7 +142,7 @@ void setUpBoard(gs_battleship game)
 /*------------------------------SHIP FUNCTIONS------------------------------*/
 void placeShip(gs_battleship game, gs_battleship_index player, int shipType, int direction, int x, int y)
 {
-	gs_battleship_index xpos, ypos;
+	gs_battleship_index xpos = 0, ypos = 0;
 	gs_battleship_space_state ship = gs_battleship_space_state(shipType);
 
 	//make ship vertical
@@ -146,7 +163,7 @@ void placeShip(gs_battleship game, gs_battleship_index player, int shipType, int
 }
 
 string getShipName() {
-
+	return "";
 }
 int getShipUnits(gs_battleship_space_state ship) {
 	switch (ship) {
@@ -182,7 +199,7 @@ char displaySpaceState(gs_battleship_space_state state) {
 		return 'O';
 		break;
 	default:
-		return ' ';
+		return '_';
 		break;
 	}
 }
