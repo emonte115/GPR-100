@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -71,9 +72,15 @@ inline gs_battleship_index gs_battleship_reset(gs_battleship game)
 //-----------------------------------------------------------------------------
 // DEFINITIONS
 
+bool error;
+string border;
+
 int launchBattleship()
 {
 	gs_battleship game;// = { 0 };
+
+	border.assign(GS_BATTLESHIP_BOARD_WIDTH * 2, '-');
+	//setUpBoard(game);
 
 	gs_battleship_reset(game);
 
@@ -82,18 +89,102 @@ int launchBattleship()
 	return 0;
 }
 
-void placeShips() {
-	gs_battleship_index player, xpos, ypos, shipType;
+/*------------------------------SET UP FUNCTIONS------------------------------*/
+void drawBoard(gs_battleship game, gs_battleship_index player)
+{
+	cout << "BATTLESHIP\n" 
+		<< "Player " << player << " turn\n\n"
+		<< border << endl
 
-	cout << "What ship do you want to place?\n\n";
-	cout << "1 for patrol boat\n" << "2 for submarine\n" << "3 for destroyer\n" << "4 for battleship\n" << "5 for carrier\n";
+}
 
-	cin >> shipType;
-	shipType -= 2;
+void setUpBoard(gs_battleship game) 
+{
+	gs_battleship_index player, xpos, ypos;
+	int shipType;
 
-	cout << "Press 1 to place it vertically, press 2 to place it  horizontally\n";
+	for (player = 0; player < GS_BATTLESHIP_PLAYERS; ++player) {
+		cout << "Player " << player + 1 << " set up your ships";
+		for (shipType = 3; shipType < 8; ++shipType) {
+			int direction, x, y;
 
-	//cin >> 
+			cout << "What direction do you want your " << shipType << " to be placed?\n";
+			cout << "Press 1 for vertical or 2 for horizontal: ";
+			cin >> direction;
+			
+			cout << "Where do you want your ship placed?" << endl << "x: ";
+			cin >> x;
+			cout << "y: ";
+			cin >> y;
+
+			placeShip(game, player, shipType, direction, x, y);
+		}
+	}
+}
+
+/*------------------------------SHIP FUNCTIONS------------------------------*/
+void placeShip(gs_battleship game, gs_battleship_index player, int shipType, int direction, int x, int y)
+{
+	gs_battleship_index xpos, ypos;
+	gs_battleship_space_state ship = gs_battleship_space_state(shipType);
+
+	//make ship vertical
+	if (direction == 1) {
+		for (int i = 0; i < getShipUnits(ship); i++) {
+			ypos = y + i;
+			gs_battleship_setSpaceState(game, ship, player, xpos, ypos);
+		}
+	}
+	//make ship horizontal
+	else if (direction == 2) {
+		for (int i = 0; i < getShipUnits(ship); i++) {
+			xpos = x + i;
+			gs_battleship_setSpaceState(game, ship, player, xpos, ypos);
+		}
+	}
+
+}
+
+string getShipName() {
+
+}
+int getShipUnits(gs_battleship_space_state ship) {
+	switch (ship) {
+	case gs_battleship_space_patrol2:
+		return 2;
+		break;
+	case gs_battleship_space_submarine3:
+		return 3;
+		break;
+	case gs_battleship_space_destroyer3:
+		return 3;
+		break;
+	case gs_battleship_space_battleship4:
+		return 4;
+		break;
+	case gs_battleship_space_carrier5:
+		return 5;
+		break;
+	default:
+		return 0;
+		break;
+	}
+}
+
+/*------------------------------OTHER FUNCTIONS------------------------------*/
+char displaySpaceState(gs_battleship_space_state state) {
+	switch (state) 
+	{
+	case gs_battleship_space_miss:
+		return 'X';
+		break;
+	case gs_battleship_space_hit:
+		return 'O';
+		break;
+	default:
+		return ' ';
+		break;
+	}
 }
 
 //-----------------------------------------------------------------------------

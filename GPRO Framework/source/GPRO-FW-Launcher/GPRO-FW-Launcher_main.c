@@ -2,8 +2,10 @@
 //
 
 int launchTicTacToe();
+int launchBattleship();
 
 int main()
 {
-	launchTicTacToe();
+	//launchTicTacToe();
+	launchBattleship();
 }
