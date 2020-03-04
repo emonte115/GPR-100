@@ -75,9 +75,6 @@ inline gs_battleship_index gs_battleship_reset(gs_battleship game)
 //variables
 bool error = false;
 string border;
-struct Ships {
-
-};
 
 //function declarations
 void drawBoard(gs_battleship game, gs_battleship_index player);
@@ -94,8 +91,6 @@ char displaySpaceState(gs_battleship_space_state state);
 char displayOppState(gs_battleship_space_state state);
 void getCoordinates(int& x, int& y);
 void cont();
-void displayTitle();
-//int letterToNumber(char letter);
 
 int launchBattleship()
 {
@@ -114,8 +109,10 @@ int launchBattleship()
 		player = !player;
 	} while (!win(game, player));
 	system("CLS");
-	cout << "Player " << !player + 1 << " wins!\nCongratulations!";
+	cout << "Player " << !player + 1 << " wins!\nCongratulations!\n";
 
+	system("pause");
+	system("CLS");
 	return 0;
 }
 
@@ -171,11 +168,8 @@ void setUpBoard(gs_battleship game)
 				cout << "Press 1 for vertical or 2 for horizontal: ";
 				cin >> direction;
 
-				//if time: make it so that its letters and numbers
 				cout << "Where do you want your " << getShipName(shipType) << " placed?" << endl;
-				//getCoordinates(x, y);
-				x = shipType-2;
-				y = shipType-2;
+				getCoordinates(x, y);
 
 				placeShip(game, player, shipType, direction, x, y);
 			} while (error);
@@ -359,6 +353,7 @@ char displaySpaceState(gs_battleship_space_state state) {
 		break;
 	}
 }
+//hides info other player shouldn't see
 char displayOppState(gs_battleship_space_state state) {
 	switch (state)
 	{
@@ -387,15 +382,6 @@ void cont() {
 	cout << "Other Player's Turn\n";
 	system("pause");
 	system("CLS");
-}
-
-void displayTitle() {
-	cout << "______  ___ _____ _____ _      _____ _____ _   _ ___________" << endl
-		<< "| ___ \/ _ \_   _|_   _| |    |  ___/  ___| | | |_   _| ___ \ " << endl
-		<< "| |_/ / /_\ \| |   | | | |    | |__ \ `--.| |_| | | | | |_/ /" << endl
-		<< "| ___ \  _  || |   | | | |    |  __| `--. \  _  | | | |  __/ " << endl
-		<< "| |_/ / | | || |   | | | |____| |___/\__/ / | | |_| |_| |    " << endl
-		<< "\____/\_| |_/\_/   \_/ \_____/\____/\____/\_| |_/\___/\_|    " << endl;
 }
 
 //-----------------------------------------------------------------------------
